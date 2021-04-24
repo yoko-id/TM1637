@@ -141,6 +141,8 @@ class TM1637Display {
     //! @return A code representing the 7 segment image of the digit (LSB - segment A;
     //!         bit 6 - segment G; bit 7 - always zero)
     static uint8_t encodeDigit(uint8_t digit);
+    // default blank 37 data segemnt
+    void show(const uint8_t d0, uint8_t d1 = 37, uint8_t d2 = 37, uint8_t d3 = 37, uint8_t pos = 0);
 
   protected:
     void bitDelay();
