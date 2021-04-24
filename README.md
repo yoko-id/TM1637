@@ -22,6 +22,7 @@ Usage
 The library provides a single class named TM1637Display. An instance of this class provides the following functions:
 
 * `setSegments` - Set the raw value of the segments of each digit
+* `show` - Set the value of the segments of each digit1,digit2,digit3,digit4
 * `showNumberDec` - Display a decimal number
 * `showNumberDecEx` - Display a decimal number with decimal points or colon
 * `setBrightness` - Sets the brightness of the display
