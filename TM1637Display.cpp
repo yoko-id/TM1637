@@ -47,7 +47,7 @@ const uint8_t digitToSegment[] = {
   0b01111101,    // 6
   0b00000111,    // 7
   0b01111111,    // 8
-  0b01101111,    // 9 
+  0b01101111,    // 9
   0b01110111,    // A - 10
   0b01111100,    // b
   0b00111001,    // C - 12
@@ -70,10 +70,10 @@ const uint8_t digitToSegment[] = {
   0b01111000,    // t
   0b00111110,    // U - 30
   0b00111110,    // V
-  0b00111110,    // W
-  0b00111110,    // X
-  0b00111110,    // Y
-  0b00111110,    // Z - 35
+  0b01110110,    // W
+  0b01110110,    // X
+  0b01101110,    // Y
+  0b01001001,    // Z - 35
   0b01000000     // -
   //XGFEDCBA
 };
@@ -113,6 +113,32 @@ void TM1637Display::setSegments(const uint8_t segments[], uint8_t length, uint8_
 
   // Write the data bytes
   for (uint8_t k = 0; k < length; k++)writeByte(segments[k]);
+
+  stop();
+
+  // Write COMM3 + brightness
+  start();
+  writeByte(TM1637_I2C_COMM3 + (m_brightness & 0x0f));
+  stop();
+}
+
+void TM1637Display::show(const uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3)
+{
+  // Write COMM1
+  start();
+  writeByte(TM1637_I2C_COMM1);
+  stop();
+
+  // Write COMM2 + first digit address
+  start();
+  writeByte(TM1637_I2C_COMM2 + (0 & 0x03));
+  //for (uint8_t k = 0; k < 3; k++)writeByte(TM1637_I2C_COMM2 + (k & 0x03));
+  // Write the data bytes
+  //for (uint8_t k = 0; k < length; k++)
+  writeByte(digitToSegment[d0]);
+  writeByte(digitToSegment[d1]);
+  writeByte(digitToSegment[d2]);
+  writeByte(digitToSegment[d3]);
 
   stop();
 
